@@ -75,13 +75,13 @@ godtyckligt angivet kommando.
 %setup -q -n mod_%{mod_name}-%{version}-apache2
 
 %build
-%{apxs} -c src/mod_%{mod_name}.c -o mod_%{mod_name}.so -Wl,-shared
+%{apxs} -c src/mod_%{mod_name}.c -o mod_%{mod_name}.la
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_pkglibdir}
 
-install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+install .libs/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
