@@ -1,5 +1,5 @@
-%define		mod_name	auth_any
-%define 	apxs		/usr/sbin/apxs
+%define	mod_name	auth_any
+%define apxs		/usr/sbin/apxs
 Summary:	Basic authentication for the Apache Web server using arbitrary shell commands
 Summary(cs):	Základní autentizace pro WWW server Apache pomocí shellových pøíkazù
 Summary(da):	En autenticeringsmodul for webtjeneren Apache hvor man kan bruge vilkårlige skal-kommandoer
@@ -12,17 +12,18 @@ Summary(pt):	Um módulo de autenticação de LDAP para o servidor Web Apache
 Summary(sl):	Osnovna avtentikacija za spletni stre¾nik Apache, z uporabo poljubnih lupinskih ukazov
 Summary(sv):	Grundläggande autentisering för webbservern Apache med valfria skalkommandon
 Name:		apache-mod_%{mod_name}
-Version:	1.3
+Version:	1.2.2
 Release:	1
+Epoch:		1
 License:	BSD
 Group:		Networking/Daemons
-Source0:	ftp://ftp.itlab.musc.edu/pub/toolbox/mod_%{mod_name}/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	847d209b295a02f48e9ea3d55dac652a
-URL:		http://www.itlab.musc.edu/~nafees/mod_%{mod_name}.html
+Source0:	http://www.itlab.musc.edu/webNIS/dist/mod_%{mod_name}-%{version}-apache2.tar.gz
+# Source0-md5:	e9a1825b818d108e1204692da3d7bfd0
+URL:		http://www.itlab.musc.edu/webNIS/mod_auth_any.html
 BuildRequires:	%{apxs}
-BuildRequires:	apache(EAPI)-devel
+BuildRequires:	apache-devel >= 2
 Requires(post,preun):	%{apxs}
-Requires:	apache(EAPI)
+Requires:	apache >= 2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
@@ -71,10 +72,10 @@ servade av en webbserver genom att kontrollera returkoden från ett
 godtyckligt angivet kommando.
 
 %prep
-%setup -q -n mod_%{mod_name}
+%setup -q -n mod_%{mod_name}-%{version}-apache2
 
 %build
-%{apxs} -c src/mod_%{mod_name}.c -o mod_%{mod_name}.so
+%{apxs} -c src/mod_%{mod_name}.c -o mod_%{mod_name}.so -Wl,-shared
 
 %install
 rm -rf $RPM_BUILD_ROOT
