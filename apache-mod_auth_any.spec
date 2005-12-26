@@ -21,12 +21,12 @@ Source0:	http://www.itlab.musc.edu/webNIS/dist/mod_%{mod_name}-%{version}-apache
 # Source0-md5:	e9a1825b818d108e1204692da3d7bfd0
 URL:		http://www.itlab.musc.edu/webNIS/mod_auth_any.html
 BuildRequires:	%{apxs}
-BuildRequires:	apache-devel >= 2
-Requires(post,preun):	%{apxs}
-Requires:	apache >= 2
+BuildRequires:	apache-devel >= 2.0
+Requires:	apache(modules-api) = %apache_modules_api
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %description
 This module allows you to use any command line program (such as
@@ -79,22 +79,22 @@ godtyckligt angivet kommando.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_pkglibdir}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}/httpd.conf}
 
 install .libs/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+echo 'LoadModule %{mod_name}_module modules/mod_%{mod_name}.so' > \
+	$RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/90_mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
@@ -103,4 +103,5 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc docs/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_%{mod_name}.conf
 %attr(755,root,root) %{_pkglibdir}/*
