@@ -78,7 +78,7 @@ godtyckligt angivet kommando.
 %patch0 -p1
 
 %build
-%{__make} APXS2=apxs
+%{__make} APXS2=/usr/sbin/apxs
 
 %install
 rm -rf $RPM_BUILD_ROOT
