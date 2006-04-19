@@ -1,0 +1,17 @@
+diff -urN mod_auth_any/src/maa_config.h mod_auth_any.conf/src/maa_config.h
+--- mod_auth_any/src/maa_config.h	2004-11-22 21:21:14.000000000 +0100
++++ mod_auth_any.conf/src/maa_config.h	2006-04-19 13:19:20.000000000 +0200
+@@ -1,10 +1,10 @@
+ #ifndef MAA_CONFIG
+ #define MAA_CONFIG
+ /* cache timeout in seconds */
+-#define MAA_CACHE_EXPIRE 20
++#define MAA_CACHE_EXPIRE 300
+ 
+-#define MAA_DEBUGLVL 4
+-#define MAA_MAX_CACHE_ENTRIES 3
++#define MAA_DEBUGLVL 0
++#define MAA_MAX_CACHE_ENTRIES 16
+ 
+ #define MAA_USE_MD5 1
+ 
