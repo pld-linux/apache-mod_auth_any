@@ -78,13 +78,13 @@ godtyckligt angivet kommando.
 %patch0 -p1
 
 %build
-%{__make}
+%{__make} APXS2=apxs
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}/httpd.conf}
 
-install .libs/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+install src/.libs/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
 echo 'LoadModule %{mod_name}_module modules/mod_%{mod_name}.so' > \
 	$RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/90_mod_%{mod_name}.conf
 
