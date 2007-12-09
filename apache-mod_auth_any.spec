@@ -21,7 +21,7 @@ Source0:	http://www.itlab.musc.edu/webNIS/dist/mod_%{mod_name}-%{version}-rc1.ta
 # Source0-md5:	76a105e42fb82947c2c4243975a1b7f9
 Patch0:		%{name}-conf.patch
 URL:		http://www.itlab.musc.edu/webNIS/mod_auth_any.html
-BuildRequires:	apache-apxs >= 2.0
+BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	apache(modules-api) = %apache_modules_api
