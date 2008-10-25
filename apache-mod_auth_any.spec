@@ -16,7 +16,7 @@ Version:	1.6
 Release:	0.rc1.1
 Epoch:		1
 License:	BSD
-Group:		Networking/Daemons
+Group:		Networking/Daemons/HTTP
 Source0:	http://www.itlab.musc.edu/webNIS/dist/mod_%{mod_name}-%{version}-rc1.tar.gz
 # Source0-md5:	76a105e42fb82947c2c4243975a1b7f9
 Patch0:		%{name}-conf.patch
